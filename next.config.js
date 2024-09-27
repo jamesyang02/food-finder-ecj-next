@@ -4,12 +4,12 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination:
-          process.env.NODE_ENV === 'development'
-            ? 'http://127.0.0.1:5328/api/:path*'
-            : '/api/',
+        destination: 'http://localhost:8080/api/:path*'
       },
     ]
+  },
+  experimental: {
+    serverActions: true,
   },
 }
 
