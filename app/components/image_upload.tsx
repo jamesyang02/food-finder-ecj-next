@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import FormData from 'form-data';
 import axios from 'axios';
 
 export default function FileUpload() {
