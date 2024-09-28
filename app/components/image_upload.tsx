@@ -18,10 +18,16 @@ export default function FileUpload() {
     e.preventDefault();
     if (!file) return;
 
+    // clear session storage
+    sessionStorage.removeItem("foodsFound");
+
     // FoodVisor query
     const formData = new FormData();
     formData.append('file', file);
 
+    if (sessionStorage.getItem("foodsFound")) {
+      router.push(`/home/results`);
+    }
     axios.post('https://food-finder-ecj.vercel.app/api/analyze', formData)
     .then((res) => {
       // Store response in state
