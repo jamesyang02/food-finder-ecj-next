@@ -3,30 +3,56 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'
+import parseResults from './parse_results';
 
 export default function FileUpload() {
+  // Router here for redirecting to results page
+  const router = useRouter()
+
+  // Store file in page state for upload
   const [file, setFile] = useState<File>();
 
+  // Handle form submission and submit to API
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
-    const base64 = await toBase64(file as File);
 
-    // Call the FoodVisor query
+    // FoodVisor query
     const formData = new FormData();
     formData.append('file', file);
-    axios.post('https://food-finder-ecj.vercel.app/api/analyze', formData)
-    .then((res) => {    
-      console.log(res.data);
+
+    axios.post('https://food-finder-dr3kfl0iz-james-yangs-projects-b85f648d.vercel.app/api/analyze', formData)
+    .then((res) => {
+      // Store response in state
+      sessionStorage.setItem("foodsFound", res.data);
+      console.log("Image uploaded successfully!");
+      // redirect to the results page
+      router.push(`/results`);
     })
     .catch((err) => {
       console.error(err);
       console.log("Something went wrong while uploading your image.");
     });
-    // const chatCompletion = await main(base64 as string);
-    // console.log(chatCompletion.choices[0]?.message?.content || "");
+
+    try {
+      if (sessionStorage.getItem("foodsFound")) {
+        console.log("Image uploaded successfully!");
+        // wait for the results to be parsed
+        const parsed = await parseResults();
+        if (parsed) {
+          router.push(`/home/results`);
+        } else {
+          console.log("Something went wrong while parsing the results");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      console.log("Something went wrong while uploading your image.");
+    }
   };
 
+  // Handle file change when user selects a file to upload
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -39,16 +65,17 @@ export default function FileUpload() {
     }
   };
 
-  const toBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file as Blob);
-    });
-  };
+  // Unused function to convert file to base64
+  // const toBase64 = (file: File) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       resolve(reader.result);
+  //     };
+  //     reader.onerror = (error) => reject(error);
+  //     reader.readAsDataURL(file as Blob);
+  //   });
+  // };
 
   return (
     <main>

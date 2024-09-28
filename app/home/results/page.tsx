@@ -1,7 +1,7 @@
 'use client'
 
-import ImageUpload from "@/app/components/image_upload"
 import { useEffect, useState } from 'react';
+import DisplayResults from "@/app/components/display_results";
 
 export default function Page() {
   const [message, setMessage] = useState("");
@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <div>
         <p> {!loading ? message : "Loading.."}</p>
-        <ImageUpload />
+        <DisplayResults />
     </div>
   )
 }
