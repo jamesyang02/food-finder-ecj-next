@@ -44,6 +44,7 @@ export default function FileUpload() {
     });
 
     try {
+      console.log("Analyzing image...");
       if (sessionStorage.getItem("foodsFound")) {
         // wait for the results to be parsed
         const parsed = await parseResults();
