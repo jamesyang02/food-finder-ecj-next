@@ -1,3 +1,5 @@
+'use client'
+
 export default async function parseResults() {
   const data = sessionStorage.getItem('foodsFound') || '[]';
   const foodObjects = JSON.parse(data).items.map((item: any) => {

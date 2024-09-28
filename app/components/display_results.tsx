@@ -1,14 +1,22 @@
 'use client'
 
+import { useEffect, useState } from 'react';
+
 export default function DisplayResults() {
-  const dataString = sessionStorage.getItem('foodDisplayList') || "Oops! something went wrong. Please try again.";
-  // Gives the data in the form of an array of objects
+  const [sessionDataString, setSessionDataString] = useState<string | null>(null);
+
+  useEffect(() => {
+    const dataString = sessionStorage.getItem("foodDisplayList") || '';
+    setSessionDataString(dataString);
+  }, []);
+
+  const dataString = sessionDataString || '{}';
+
   const data = JSON.parse(dataString);
 
   var listEl = document.getElementById('displayFoodList');
   
   try{
-
     makeList(data,listEl);
   } catch (error) {
     console.error(error);
