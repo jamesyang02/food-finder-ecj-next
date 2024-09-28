@@ -27,8 +27,6 @@ export default function FileUpload() {
       // Store response in state
       sessionStorage.setItem("foodsFound", res.data);
       console.log("Image uploaded successfully!");
-      // redirect to the results page
-      router.push(`/results`);
     })
     .catch((err) => {
       console.error(err);
