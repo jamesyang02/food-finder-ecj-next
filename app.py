@@ -9,11 +9,6 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-# render the home page file
-@app.route("/")
-def index():
-    return render_template("./app/page.tsx")
-
 # test the API
 @app.route("/api")
 def test():
