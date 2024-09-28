@@ -1,16 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { useMounted } from '@/app/hooks/useMounted'
 
 export default function DisplayResults() {
-  const [sessionDataString, setSessionDataString] = useState<string | null>(null);
+  const mounted = useMounted()
+  if (!mounted) return null
 
-  useEffect(() => {
-    const dataString = sessionStorage.getItem("foodDisplayList") || '';
-    setSessionDataString(dataString);
-  }, []);
-
-  const dataString = sessionDataString || '{}';
+  const dataString = sessionStorage.getItem("foodDisplayList") || '';
 
   const data = JSON.parse(dataString);
 
