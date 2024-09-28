@@ -25,8 +25,12 @@ export default function FileUpload() {
     axios.post('https://food-finder-ecj.vercel.app/api/analyze', formData)
     .then((res) => {
       // Store response in state
-      sessionStorage.setItem("foodsFound", res.data);
-      console.log("Image uploaded successfully!");
+      if (res.data) {
+        sessionStorage.setItem("foodsFound", JSON.stringify(res.data));
+        console.log("Image uploaded successfully!");
+      } else {
+        console.log("Couldn't reach the API server!");
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -35,18 +39,17 @@ export default function FileUpload() {
 
     try {
       if (sessionStorage.getItem("foodsFound")) {
-        console.log("Image uploaded successfully!");
         // wait for the results to be parsed
         const parsed = await parseResults();
         if (parsed) {
           router.push(`/home/results`);
         } else {
-          console.log("Something went wrong while parsing the results");
+          console.log("Something went wrong while cleaning the results");
         }
       }
     } catch (error) {
       console.error(error);
-      console.log("Something went wrong while uploading your image.");
+      console.log("Something went wrong while analyzing the image.");
     }
   };
 
