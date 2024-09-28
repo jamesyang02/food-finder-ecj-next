@@ -22,7 +22,7 @@ export default function FileUpload() {
     const formData = new FormData();
     formData.append('file', file);
 
-    axios.post('https://food-finder-dr3kfl0iz-james-yangs-projects-b85f648d.vercel.app/api/analyze', formData)
+    axios.post('https://food-finder-ecj.vercel.app/api/analyze', formData)
     .then((res) => {
       // Store response in state
       sessionStorage.setItem("foodsFound", res.data);
