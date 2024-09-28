@@ -37,27 +37,27 @@ export default function FileUpload() {
       } else {
         console.log("Couldn't reach the API server!");
       }
+      
+      try {
+        console.log("Analyzing image...");
+        if (sessionStorage.getItem("foodsFound")) {
+          // wait for the results to be parsed
+          const parsed = parseResults();
+          if (parsed) {
+            router.push(`/home/results`);
+          } else {
+            console.log("Something went wrong while cleaning the results");
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        console.log("Something went wrong while analyzing the image.");
+      }
     })
     .catch((err) => {
       console.error(err);
       console.log("Something went wrong while uploading your image.");
     });
-
-    try {
-      console.log("Analyzing image...");
-      if (sessionStorage.getItem("foodsFound")) {
-        // wait for the results to be parsed
-        const parsed = await parseResults();
-        if (parsed) {
-          router.push(`/home/results`);
-        } else {
-          console.log("Something went wrong while cleaning the results");
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      console.log("Something went wrong while analyzing the image.");
-    }
   };
 
   // Handle file change when user selects a file to upload
