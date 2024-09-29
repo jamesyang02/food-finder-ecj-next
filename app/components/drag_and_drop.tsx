@@ -1,6 +1,5 @@
 'use client'
 
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 
 export default function FilesDragAndDrop({onUpload}: any) {
@@ -66,7 +65,3 @@ export default function FilesDragAndDrop({onUpload}: any) {
     </div>
   );
 }
-
-FilesDragAndDrop.propTypes = {
-  onUpload: PropTypes.func.isRequired,
-};
