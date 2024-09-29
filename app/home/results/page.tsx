@@ -15,6 +15,13 @@ export default function Page() {
   const [data, setData] = useState<any>([]);
   const [groqData, setGroqData] = useState<any>([]);
 
+  const ArrowLeft02Icon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"foreground-rgb"} fill={"none"} {...props}>
+      <path d="M3.99982 11.9998L19.9998 11.9998" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.99963 17C8.99963 17 3.99968 13.3176 3.99966 12C3.99965 10.6824 8.99966 7 8.99966 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+
   useEffect(() => {
     async function fetchData() {
       const foodJsonString = sessionStorage.getItem("foodDisplayList");
@@ -38,9 +45,13 @@ export default function Page() {
         }
         console.log(form);
         // send the form to the groq endpoint
-        const response = await axios.post("https://food-finder-ecj.vercel.app/api/groq", form);
-        if (response.data) {
-          setGroqData(response.data);
+        try {
+          const response = await axios.post("https://food-finder-ecj.vercel.app/api/groq", form);
+          if (response.data) {
+            setGroqData(response.data);
+          }
+        } catch (error) {
+          console.error(error);
         }
       }
     }
@@ -55,6 +66,7 @@ export default function Page() {
     <div id="resultsWrapper" className="mx-auto w-9/12">
       <div className="relative mx-auto w-full text-center">
         <h1 className={dela.className + " p-10 text-5xl font-bold"}>Results</h1>
+        <ArrowLeft02Icon className="absolute top-14 left-0 hover:cursor-pointer" onClick={() => {window.location.href = "/home";}} />
       </div>
       <div className="flex md:flex-row flex-col flex-auto">
         <div id="foodItemsList" className="md:w-10/12 w-full flex md:flex-row flex-col flex-wrap flex-auto">
@@ -73,6 +85,7 @@ export default function Page() {
         <p className="p-2 md:w-fit w-full"><b>Q: What can I make with this list of items?</b></p><br></br>
         <div id="groqItemsList" className="p-2 md:w-2/3 w-full">
           {groqData && "A: " + groqData}
+          {!groqData[0] && "Sorry, I couldn't find any recipes. Did your photo contain food items?"}
         </div>
       </div>
       <div id="footing" className="h-44"></div>

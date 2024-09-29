@@ -20,6 +20,14 @@ export default function Page() {
   if (mounted) {
     window.onload = () => {
 
+      // disable loading screen on window load
+      const loadingBox = document.getElementById("loadingBox");
+      if (loadingBox) {
+        loadingBox.classList.remove("hidden");
+        loadingBox.classList.add("absolute");
+        loadingBox.setAttribute("style", "opacity: 1;");
+      }
+      
       // enable analyze button on window load
       const uploadButton = document.getElementById("uploadButton");
       if (uploadButton) {
