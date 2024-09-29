@@ -8,14 +8,18 @@ export default function parseResults() {
   console.log(foodObjects);
   try {
     const foods = foodObjects.map((food: any) => {
+      const object = {
+        Name: food.food_info.display_name,
+        Quantity: food.quantity || null,
+        ServingSize: food.food_info.g_per_serving,
+        CaloriesPer100g: food.food_info.nutrition.calories_100g,
+      }
       return {
-        item: {"Item": food.food_info.display_name},
-        "Quantity": food.quantity || null,
-        "Serving Size": food.food_info.g_per_serving,
-        "Calories per 100g": food.food_info.nutrition.calories_100g,
+        key: food.food_info.display_name,
+        item: object,
       }
     });
-    console.log(foods);
+    console.log("foods parsed" + foods);
     sessionStorage.setItem('foodDisplayList', JSON.stringify(foods));
     return true;
   } catch (error) {

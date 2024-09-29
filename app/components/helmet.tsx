@@ -16,12 +16,18 @@ const HelpCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Helmet() {
+  const handleAbout = (e: any) => {
+    e.preventDefault();
+    alert("This is a food vision app. \
+Upload an image using one of the given methods \
+to get a list of food items in the image. ");
+  };
 
   return (
-    <nav className="relative container mx-auto p-6">
+    <nav className="relative container w-screen mx-auto p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-        <a href="/about" className="text-lg">
+        <a href="#" onClick={handleAbout} className="text-lg">
           <HelpCircleIcon />
         </a>
         </div>

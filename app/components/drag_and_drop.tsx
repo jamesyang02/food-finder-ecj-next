@@ -2,6 +2,9 @@
 
 import React, { useEffect } from 'react';
 
+import { Dela_Gothic_One } from 'next/font/google';
+const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
+
 export default function FilesDragAndDrop({onUpload}: any) {
 
   const count = 1;
@@ -46,22 +49,19 @@ export default function FilesDragAndDrop({onUpload}: any) {
     }
     // upload single file if everything goes well
     if (files && files.length) {
-      onUpload(files);
+      onUpload(files[0]);
     }
   };
 
   return (
-    <div className='FilesDragAndDrop__area'
+    <div className='FilesDragAndDrop__area z-3 w-full h-96 mx-auto bg-slate-700 hover:bg-slate-800 p-4 rounded-3xl text-center text-slate-400 hover:text-slate-600 transition-all'
       ref={drop}
     >
-      Hey, drop me some files
-      <span
-        role='img'
-        aria-label='emoji'
-        className='area__icon'
-      >
-        &#128526;
-      </span>
+      <div className="FilesDragAndDrop__area flex -col justify-center items-center h-full mx-auto p-3 rounded-2xl border-8 border-dashed border-slate-400">
+        <p className={dela.className + " h-full align-middle text-2xl w-6/12 mx-auto"}>
+          Drag and drop an image here, or click to select
+        </p>
+      </div>
     </div>
   );
 }

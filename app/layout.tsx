@@ -5,7 +5,6 @@ import Helmet from '@/app/components/helmet'
 import { Poppins } from 'next/font/google'
 import { Dela_Gothic_One } from 'next/font/google'
 const poppins = Poppins({ weight: ['400'], subsets: ['latin'] })
-const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
