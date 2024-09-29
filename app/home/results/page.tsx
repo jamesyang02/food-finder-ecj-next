@@ -38,7 +38,7 @@ export default function Page() {
         }
         console.log(form);
         // send the form to the groq endpoint
-        const response = await axios.post("/api/groq", form);
+        const response = await axios.post("https://food-finder-ecj.vercel.app/api/groq", form);
         if (response.data) {
           setGroqData(response.data);
         }
