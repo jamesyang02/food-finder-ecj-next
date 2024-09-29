@@ -7,7 +7,7 @@ export default function DisplayResults() {
   const mounted = useMounted()
   if (!mounted) return null
 
-  const dataString = sessionStorage.getItem("foodDisplayList") || '';
+  const dataString = sessionStorage.getItem("foodDisplayList") || JSON.stringify({Error: 'No data found'});
 
   const data = JSON.parse(dataString);
 
@@ -47,8 +47,8 @@ export default function DisplayResults() {
   }
 
   return (
-    <main>
+    <div>
       <ul id="displayFoodList"></ul>
-    </main>
+    </div>
   );
 }

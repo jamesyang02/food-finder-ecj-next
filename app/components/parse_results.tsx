@@ -10,10 +10,9 @@ export default function parseResults() {
     const foods = foodObjects.map((food: any) => {
       return {
         item: {"Item": food.food_info.display_name},
+        "Quantity": food.quantity || null,
         "Serving Size": food.food_info.g_per_serving,
         "Calories per 100g": food.food_info.nutrition.calories_100g,
-        "Ingredients": food.ingredients || ['No ingredients found'],
-        "Quantity": food.quantity || null,
       }
     });
     console.log(foods);
