@@ -1,7 +1,7 @@
 'use client'
 
 import DragAndDrop from "../components/drag_and_drop";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import callAPI from "../components/call_api";
 import { useMounted } from "../hooks/useMounted";
@@ -18,32 +18,21 @@ export default function Page() {
 
   // useMounted hook
   const mounted = useMounted();
-  if (!mounted) return null;
-  // enable button on window load
-  window.onload = () => {
-    const uploadButton = document.getElementById("uploadButton");
-    if (uploadButton) {
-      uploadButton.removeAttribute("disabled");
-    }
-    // add click listener to drag n drop
-    const dragAndDropComp = document.getElementById('dragAndDrop'); 
-    dragAndDropComp?.addEventListener('click', () => {
-      const clickInput = document.getElementById('clickInput');
-      clickInput?.click();
-    });
-  };
-  // check if api is up
-  useEffect(() => {
-    fetch('https://food-finder-ecj.vercel.app/api')
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          console.log("API is up and running!");
-        } else {
-          alert("Couldn't reach the API server! You may not receive results.");
-        }
-      })
-  }, [])
+  if (mounted) {
+    // enable button on window load
+    window.onload = () => {
+      const uploadButton = document.getElementById("uploadButton");
+      if (uploadButton) {
+        uploadButton.removeAttribute("disabled");
+      }
+      // add click listener to drag n drop
+      const dragAndDropComp = document.getElementById('dragAndDrop'); 
+      dragAndDropComp?.addEventListener('click', () => {
+        const clickInput = document.getElementById('clickInput');
+        clickInput?.click();
+      });
+    };
+  }
 
   // Helper function to handle image upload from click input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
