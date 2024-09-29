@@ -26,20 +26,22 @@ export default function Page() {
     async function fetchGroqRecs() {
       // use axios to query groq
       // create a form with foodJsonString
-      const form = new FormData();
       var foodNames = null;
       const foodJsonString = sessionStorage.getItem("foodDisplayList");
       if (foodJsonString) {
-        foodNames = JSON.parse(foodJsonString).map((object: any) => object.item.item.Name);
+        foodNames = JSON.parse(foodJsonString).map((object: any) => object.item.Name);
       }
       if (foodNames) {
-        form.append("itemsList", JSON.stringify(foodNames));
-        console.log("foodNames: " + JSON.stringify(foodNames));
-      }
-      // send the form to the groq endpoint
-      const response = await axios.post("/api/groq", form);
-      if (response.data) {
-        setGroqData(response.data);
+        console.log("foodNames: " + foodNames);
+        const form = {
+          items: foodNames,
+        }
+        console.log(form);
+        // send the form to the groq endpoint
+        const response = await axios.post("/api/groq", form);
+        if (response.data) {
+          setGroqData(response.data);
+        }
       }
     }
 
@@ -65,16 +67,12 @@ export default function Page() {
         </div>
       </div>
       <div className="relative mx-auto w-full text-center">
-        <h1 className={dela.className + " p-10 text-4xl font-bold"}>Recipe Recommendation</h1>
+        <h1 className={dela.className + " py-10 text-4xl font-bold md:text-center text-left"}>Recipe Recommendation</h1>
       </div>
-      <div className="flex md:flex-row flex-col flex-auto">
-        <div id="groqItemsList" className="md:w-10/12 w-full">
-          {groqData.map((object: any) => (
-            <DynamicListItem 
-              key={object.key}
-              item={object.item}
-            />
-            ))}
+      <div className="flex md:flex-row flex-col flex-auto leading-8">
+        <p className="p-2 md:w-fit w-full"><b>Q: What can I make with this list of items?</b></p><br></br>
+        <div id="groqItemsList" className="p-2 md:w-2/3 w-full">
+          {groqData && "A: " + groqData}
         </div>
       </div>
       <div id="footing" className="h-44"></div>

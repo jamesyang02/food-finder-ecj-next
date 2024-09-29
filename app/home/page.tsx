@@ -57,21 +57,6 @@ export default function Page() {
       }
       return;
     }
-    // store image as a string
-    const handleImageStore = () => {
-      const file = image;
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const dataURL = reader.result;
-          console.log(dataURL as string);
-          sessionStorage.setItem("image", dataURL as string);
-        };
-
-        reader.readAsText(file); // You can use other methods like readAsDataURL() for images
-      }
-    }
-    handleImageStore();
     // call the API
     const res = await callAPI(image);
     if (res == 1) {
