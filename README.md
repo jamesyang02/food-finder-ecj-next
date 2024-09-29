@@ -7,9 +7,9 @@
 
 <br/>
 
-## Introduction
+## Introduction and tech stack choices
 
-This is a hybrid Next.js + Python app that uses Next.js as the frontend and Flask as the API backend. I chose this tech stack in order to make Python calls on the backend to specific API hosts that I believed were the best fit for this project.
+This is a hybrid Next.js + Python app that uses Next.js as the frontend and Flask as the API backend. I chose this tech stack in order to make serverless Python calls on the backend to specific AI model APIs that I believed were the best fit for this project. The reason I couldn't do this all in JavaScript is because the best model for this use case had a Python-exclusive API. This architecture I chose would also be easier to pivot into a true fullstack project, with a backend to store user queries and gain feedback on model performance.
 
 ## How It Works
 
