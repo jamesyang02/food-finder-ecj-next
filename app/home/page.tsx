@@ -6,7 +6,6 @@ import Image from 'next/image';
 import callAPI from "../components/call_api";
 import { useMounted } from "../hooks/useMounted";
 
-
 import { Poppins } from 'next/font/google'
 const poppins = Poppins({ weight: ['400'], subsets: ['latin'] })
 import { Dela_Gothic_One } from 'next/font/google'
@@ -19,35 +18,18 @@ export default function Page() {
   // useMounted hook
   const mounted = useMounted();
   if (mounted) {
-    // enable button on window load
     window.onload = () => {
+
+      // enable analyze button on window load
       const uploadButton = document.getElementById("uploadButton");
       if (uploadButton) {
         uploadButton.removeAttribute("disabled");
       }
-      // add click listener to drag n drop
-      const dragAndDropComp = document.getElementById('dragAndDrop'); 
-      dragAndDropComp?.addEventListener('click', () => {
-        const clickInput = document.getElementById('clickInput');
-        clickInput?.click();
-      });
     };
+    sessionStorage.removeItem("foodsFound");
+    sessionStorage.removeItem("foodDisplayList");
   }
 
-  // Helper function to handle image upload from click input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Check if file is too big, max size is 5MB
-      if (file.size > 1024 * 1024 * 5) {
-        alert("File is too big! Max file size is 5MB.");
-        e.target.value = "";
-        return;
-      }
-      setImage(file);
-      e.target.value = "";
-    }
-  };
   // Helper to clear image from both input fields
   const removeImage = () => {
     setImage(undefined);
@@ -110,10 +92,10 @@ export default function Page() {
 
   return (
     <main className="flex h-full mx-auto text-center">
-      <div id="loadingBox" className=" z-50 hidden opacity-0 top-0 left-0 h-screen w-screen bg-slate-950/50 transition-all">
+      <div id="loadingBox" className=" top-0 left-0 z-50 hidden opacity-0 h-full w-screen bg-slate-950/50 transition-all">
         <div className="z-50 flex flex-row w-full h-full justify-center items-center">
-          <div className="z-50 flex flex-row md:w-1/4 w-3/4 md:1/5 h-1/5 bg-slate-600 rounded-3xl justify-center items-center shadow-lg shadow-slate-950/50">
-            <p className={dela.className + " relative text-5xl pb-3"}>
+          <div className="z-50 flex flex-row md:w-1/4 w-3/4 md:1/5 h-1/6 bg-slate-900 rounded-3xl justify-center items-center shadow-lg shadow-slate-950/50">
+            <p className={dela.className + " relative text-2xl text-slate-100 pb-3"}>
               Analyzing...
             </p>
           </div>
@@ -126,44 +108,36 @@ export default function Page() {
         <div className="p-6 text-2xl">
           <h1 className={poppins.className}>Upload an image to get nutrition information and serving suggestions.</h1>
         </div>
-        <div id="imagePreviewContainer" className=" relative w-10/12 h-100 mx-auto">
+        <div id="imagePreviewContainer" className=" relative w-10/12 h-96 min-h-fit mx-auto">
           <div className="absolute top-0 w-full max-h-80 mx-auto">
-            <div className="w-full overflow-hidden">
-              {image && (
-                <div id="imagePreview" className="flex flex-col items-center justify-center">
-                  <Image 
-                    src={URL.createObjectURL(image)} 
-                    alt="Uploaded image" 
-                    className="mx-auto h-full rounded-2xl"
-                    width={500}
-                    height={500}
-                  />
-                  <button onClick={removeImage} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4">Remove image</button>
-                  <button onClick={uploadImage} id="uploadButton" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4">Analyze my fridge!</button>
+            <div id="inputFieldsWrapper" className="flex-col">
+              <div className="absolute w-full">
+                {image && (
+                  <div id="imagePreview" className="flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center h-96 max-h-96 w-full overflow-hidden rounded-2xl">
+                      <Image 
+                        src={URL.createObjectURL(image)} 
+                        alt="Uploaded image"
+                        className="mx-auto object-cover min-w-full w-full min-h-full h-full rounded-2xl"
+                        width={500}
+                        height={500}
+                      />
+                    </div>
+                    <button onClick={removeImage} className="mt-32 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl m-4">Remove image</button>
+                    <button onClick={uploadImage} id="uploadButton" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl m-4">Analyze my fridge!</button>
 
-                </div>
-                
-              )}
-            </div>
-          </div>
-          <div id="inputFieldsWrapper">
-            <div id="dragAndDrop" className="hover:cursor-pointer">
-              <DragAndDrop className="absolute top-0 z-3 w-full h-fit mx-auto"
-                onUpload={(file: File) => {
-                  setImage(file);
-                }}
-              >
-              </DragAndDrop>
-            </div>
-            <div id="clickInputContainer" className="z-0 absolute top-0 hover:cursor-pointer">
-              <input 
-                type="file"
-                id="clickInput"
-                value = ""
-                accept="image/*"
-                className="hidden" onChange={handleChange}
-              />
-              <label htmlFor="imageInput" className=" h-full text-transparent font-bold py-2 px-4 rounded m-4">Select an image</label>
+                  </div>
+                  
+                )}
+              </div>
+              <div id="dragAndDrop" className="z-40 flex-grow">
+                <DragAndDrop className="absolute top-0 z-3 w-full mx-auto"
+                  onUpload={(file: File) => {
+                    setImage(file);
+                  }}
+                >
+                </DragAndDrop>
+              </div>
             </div>
           </div>
         </div>

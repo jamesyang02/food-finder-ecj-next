@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="table m-auto">
-      <body className={poppins.className + " table-cell align-middle p-2"}>
+      <body className={poppins.className + " table-cell align-middle"}>
         <div className="h-full mx-auto p-0">
           <Helmet />
           <div className="h-full w-full">

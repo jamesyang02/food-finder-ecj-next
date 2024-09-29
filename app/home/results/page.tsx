@@ -21,7 +21,6 @@ export default function Page() {
       if (foodJsonString) {
         setData(JSON.parse(foodJsonString));
       }
-      setImageURL(sessionStorage.getItem("image")!);
     }
     fetchData();
   }, []);
@@ -32,21 +31,7 @@ export default function Page() {
         <h1 className={dela.className + " p-10 text-5xl font-bold"}>Results</h1>
       </div>
       <div className="flex md:flex-row flex-col flex-auto">
-        <div className="md:w-8/12 w-full">
-          {imageURL && (
-            <div className="pt-10 w-12/12">
-              <Image 
-                // get a data URL from session storage
-                src={"/../public/not_found.jpg"} 
-                alt="Uploaded image"
-                width={500}
-                height={500}
-                className="mx-auto rounded-2xl"
-              />
-            </div>
-          )}
-        </div>
-        <div id="foodItemsList" className="md:w-4/12 w-full flex flex-col flex-auto">
+        <div id="foodItemsList" className="md:w-10/12 w-full flex md:flex-row flex-col flex-wrap flex-auto">
           {data.map((object: any) => (
             <DynamicListItem 
               key={object.key}

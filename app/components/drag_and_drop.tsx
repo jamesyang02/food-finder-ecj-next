@@ -23,11 +23,11 @@ export default function FilesDragAndDrop({onUpload}: any) {
     };
   }, []);
   
+  // Handle drag and drop events
   const handleDragOver = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
   };
-  
   const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -53,15 +53,49 @@ export default function FilesDragAndDrop({onUpload}: any) {
     }
   };
 
+  // Handle click input events
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Check if file is too big, max size is 5MB
+      if (file.size > 1024 * 1024 * 2) {
+        alert("File is too big! Max file size is 2MB.");
+        e.target.value = "";
+        return;
+      }
+      onUpload(file);
+      e.target.value = "";
+    }
+  };
+
   return (
-    <div className='FilesDragAndDrop__area z-3 w-full h-96 mx-auto bg-slate-700 hover:bg-slate-800 p-4 rounded-3xl text-center text-slate-400 hover:text-slate-600 transition-all'
-      ref={drop}
-    >
-      <div className="FilesDragAndDrop__area flex -col justify-center items-center h-full mx-auto p-3 rounded-2xl border-8 border-dashed border-slate-400">
-        <p className={dela.className + " h-full align-middle text-2xl w-6/12 mx-auto"}>
-          Drag and drop an image here, or click to select
-        </p>
+    <div className="h-96 min-h-96">
+      <div className='FilesDragAndDrop__area z-3 w-full h-full mx-auto bg-zinc-100/80 hover:bg-zinc-100/50 dark:bg-slate-700 dark:hover:bg-slate-800 p-4 rounded-3xl text-center text-green-800/80 hover:text-green-800/60 dark:text-slate-400 dark:hover:text-slate-600 transition-all select-none'
+        ref={drop}
+      >
+        <div className="FilesDragAndDrop__area flex justify-center items-center min-h-full mx-auto p-3 rounded-2xl border-8 border-dashed border-green-800/60 dark:border-slate-400">
+          <p className={dela.className + " flex h-fit text-2xl w:full pb-2 md:w-6/12 mx-auto"}>
+            Drag and drop an image here, or browse below
+          </p>
+        </div>
       </div>
+      <div id="clickInputContainer" className="z-10 relative bottom-0 w-full">
+          <input
+            type="file"
+            hidden
+            id="browse"
+            onChange={handleChange}
+            accept=".jpg,.jpeg,.png"
+          />
+          <div className="w-full">
+            <label htmlFor="browse" className="browse-btn">
+              <div id="browseButton" className="FilesDragAndDrop__area flex-col mt-10 items-center bg-blue-500 hover:bg-blue-700 text-white font-bold w-8/12 mx-auto p-3 rounded-xl transition-all hover:cursor-pointer">
+                Select from device
+              </div>
+            </label>
+          </div>
+      </div>
+      <div id="footing" className="h-44"></div>
     </div>
   );
 }

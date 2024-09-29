@@ -4,7 +4,7 @@ const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
 export default function DynamicListItem(item: any) {
   return (
-    <div className="p-4">
+    <div className="p-4 md:w-1/4 w-full">
       <ul>
         <li className={dela.className + " text-xl leading-10"}>
           {item.item["Name"]}
