@@ -1,6 +1,18 @@
 import { Dela_Gothic_One } from 'next/font/google';
 const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
+// Dynamic list item component for displaying results from FoodVisor
+// receives a single item object as a prop
+// item object is an object with the following structure:
+// {
+//   item: {
+//     Name: string,
+//     Quantity: number,
+//     ServingSize: string,
+//     CaloriesPer100g: number
+//   }
+// }
+// Requires a double .item index to reach the object properties. I'm not sure why actually...
 
 export default function DynamicListItem(item: any) {
   return (

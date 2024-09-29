@@ -1,12 +1,11 @@
 'use client'
 
-//import dela gothic one
 import { Dela_Gothic_One } from 'next/font/google'
 const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 import { Poppins } from 'next/font/google'
 const poppins = Poppins({ weight: ['400'], subsets: ['latin'] })
 
-// icons
+// Help icon
 const HelpCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"foreground-rgb"} fill={"none"} {...props}>
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
@@ -14,6 +13,10 @@ const HelpCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M11.992 17H12.001" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+// Helmet component
+// Contains the help icon and the app name
+// Clicking on the help icon will display a help message
 
 export default function Helmet() {
   const handleAbout = (e: any) => {

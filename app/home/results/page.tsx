@@ -7,6 +7,10 @@ import axios from 'axios';
 import { Dela_Gothic_One } from 'next/font/google';
 const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
+// Results page
+// Route /home/results
+// Currently displays results from FoodVisor and recipe recommendations from Groq
+
 export default function Page() {
   const DynamicListItem = dynamic(() => import('@/app/components/dynamic_list_item'), {
     ssr: false,
@@ -15,6 +19,7 @@ export default function Page() {
   const [data, setData] = useState<any>([]);
   const [groqData, setGroqData] = useState<any>([]);
 
+  // Arrow left icon for back button
   const ArrowLeft02Icon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"foreground-rgb"} fill={"none"} {...props}>
       <path d="M3.99982 11.9998L19.9998 11.9998" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -22,6 +27,7 @@ export default function Page() {
     </svg>
   );
 
+  // fetch the found foods data from session storage, should have been previously stored by call_api.tsx.
   useEffect(() => {
     async function fetchData() {
       const foodJsonString = sessionStorage.getItem("foodDisplayList");
@@ -32,7 +38,8 @@ export default function Page() {
 
     async function fetchGroqRecs() {
       // use axios to query groq
-      // create a form with foodJsonString
+      // create a form with the food names from the session storage.
+      // Redundancy intended to separate the two calls: if groq call fails, at least the analysis still goes on.
       var foodNames = null;
       const foodJsonString = sessionStorage.getItem("foodDisplayList");
       if (foodJsonString) {
@@ -56,6 +63,7 @@ export default function Page() {
       }
     }
 
+    // call the previously defined functions. New functionalities can be defined above and called here.
     fetchData();
     fetchGroqRecs();
   }, []);

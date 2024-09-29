@@ -12,6 +12,10 @@ import { Dela_Gothic_One } from 'next/font/google'
 const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
 // Home page
+// Route /home
+// Contains the drag and drop image upload component
+// Also contains the upload button and the image preview for image upload component
+
 export default function Page() {
   const [image, setImage] = useState<File>();
 
@@ -65,7 +69,7 @@ export default function Page() {
       }
       return;
     }
-    // call the API
+    // call the API, passing the image
     const res = await callAPI(image);
     if (res == 1) {
       alert("Something went wrong while uploading your image.");
@@ -73,7 +77,7 @@ export default function Page() {
       uploadButton?.removeAttribute("disabled");
       return;
     } else {
-      // set loading Box to visible
+      // set loading box to visible
       const loadingBox = document.getElementById("loadingBox");
       if (loadingBox) {
         loadingBox.classList.remove("hidden");

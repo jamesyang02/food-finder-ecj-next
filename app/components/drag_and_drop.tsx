@@ -5,6 +5,11 @@ import React, { useEffect } from 'react';
 import { Dela_Gothic_One } from 'next/font/google';
 const dela = Dela_Gothic_One({ weight: ['400'], subsets: ['latin'] })
 
+// Custom drag and drop file upload component
+// Also contains a manual file input for selecting files
+// onUpload is a function that handles the file upload
+// The two are connected to the same function to avoid redundancy
+
 export default function FilesDragAndDrop({onUpload}: any) {
 
   const count = 1;

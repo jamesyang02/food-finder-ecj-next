@@ -1,5 +1,11 @@
 'use client'
 
+// Parse the results received from the FoodVisor API.
+// Takes data in the form of a JSON string of objects and parses it into a more minimal format.
+// Input format can be found in the FoodVisor API documentation.
+// Should be a utils function in the future since it does not return a component.
+// Currently does not return all the data, as the full analysis is quite a lot.
+
 export default function parseResults() {
   const data = sessionStorage.getItem('foodsFound') || '{}';
   const foodObjects = JSON.parse(data).items.map((item: any) => {
@@ -7,6 +13,7 @@ export default function parseResults() {
   });
   console.log(foodObjects);
   try {
+    // for each food object, extract the relevant information and store it in a new object
     const foods = foodObjects.map((food: any) => {
       const object = {
         Name: food.food_info.display_name,
