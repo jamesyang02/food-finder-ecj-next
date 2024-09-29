@@ -23,11 +23,11 @@ export default function Page() {
       // disable loading screen on window load
       const loadingBox = document.getElementById("loadingBox");
       if (loadingBox) {
-        loadingBox.classList.remove("hidden");
-        loadingBox.classList.add("absolute");
+        loadingBox.classList.remove("fixed");
+        loadingBox.classList.add("hidden");
         loadingBox.setAttribute("style", "opacity: 1;");
       }
-      
+
       // enable analyze button on window load
       const uploadButton = document.getElementById("uploadButton");
       if (uploadButton) {
@@ -77,7 +77,7 @@ export default function Page() {
       const loadingBox = document.getElementById("loadingBox");
       if (loadingBox) {
         loadingBox.classList.remove("hidden");
-        loadingBox.classList.add("absolute");
+        loadingBox.classList.add("fixed");
         loadingBox.setAttribute("style", "opacity: 1;");
       }
     }
@@ -85,7 +85,7 @@ export default function Page() {
 
   return (
     <main className="flex h-full mx-auto text-center">
-      <div id="loadingBox" className=" top-0 left-0 z-50 hidden opacity-0 h-full w-screen bg-slate-950/50 transition-all">
+      <div id="loadingBox" className=" hidden top-0 left-0 z-50 opacity-0 h-full w-screen bg-slate-950/50 transition-all">
         <div className="z-50 flex flex-row w-full h-full justify-center items-center">
           <div className="z-50 flex flex-row md:w-1/4 w-3/4 md:1/5 h-1/6 bg-slate-900 rounded-3xl justify-center items-center shadow-lg shadow-slate-950/50">
             <p className={dela.className + " relative text-2xl text-slate-100 pb-3"}>
